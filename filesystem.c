@@ -90,15 +90,6 @@ char* view_file(const char* bsz.txt) {
     free(filesystem_content);
     return file_content;
 }
-char *content = view_file("bsz.txt");
-    if (content != "\0") {
-        printf("Содержимое файла:\n%s\n", content);
-        free(content);
-    } else {
-        printf("Ошибка.\n");
-    }
-    return 0;
-}
 // 1.3 
 int delete_file(const char* bsz.txt) {
     FILE *fp = fopen("filesystem.txt", "r+");
@@ -114,10 +105,11 @@ int delete_file(const char* bsz.txt) {
     if (fileSize > 0) {
         filesystem_content = (char*)malloc(fileSize + 1);
         if(filesystem_content == NULL) {
-                perror("Ошибка выделения памяти"); }
+                perror("Ошибка выделения памяти"); 
+        }
             fclose(fp);
             return -1;
-        }
+    }
 
 
 
@@ -146,13 +138,13 @@ int modify_file(const char *bsz.txt, const char *new_content) {
     if (fp == NULL) {
         perror("Ошибка открытия файла");
         return 1;
-   modify_file(filename, new_content) == 0
+}
     const char *bsz.txt = "bsz.txt";
     const char *new_content = "Замена";
     size_t new_content_len = strlen(new_content);
     if (modify_file(bsz.txt, new_content) == 0) {
         printf("Файл '%s' успешно изменен.\n", bsz.txt);
-    }
+        }
     return 0;
     }
     return 0;
