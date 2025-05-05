@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-File* open_file(const char *filename) {
+File* open_file(const char *bsz.txt) {
     FILE *fp = fopen("bsz.txt", "r+");
     if (fp == NULL) {
         fp = fopen("bsz.txt", "w+"); 
@@ -38,7 +38,7 @@ if (fp == NULL) {
 }
 fclose(fp); 
     //  1.2
-  char* view_file(const char* filename) {
+  char* view_file(const char* bsz.txt) {
     File* file = open_file("bsz.txt");
     if (file == NULL) {
         return NULL;
@@ -99,7 +99,7 @@ fclose(fp);
     return file_content;
 }
 int main() {
-    char *content = view_file("мой_файл");
+    char *content = view_file("bsz.txt");
     if (content != "К") {
         printf("Содержимое файла:\n%s\n", content);
         free(content);
@@ -109,7 +109,7 @@ int main() {
     return 0;
 }
 // 1.3 
-int delete_file(const char* filename) {
+int delete_file(const char* bsz.txt) {
     FILE *fp = fopen("filesystem.txt", "r+");
     if (fp == NULL) {
         perror("Ошибка открытия файла");
@@ -127,3 +127,44 @@ int delete_file(const char* filename) {
             fclose(fp);
             return -1;
         }
+
+
+
+       
+    char *new_filesystem = NULL;
+    char *line = strtok(filesystem_content, "\n");
+    while (line) {
+        if (strcmp(line, bsz.txt) != 0) {
+            if (new_filesystem == NULL) {
+                new_filesystem = strdup(line);
+            } else {
+                new_filesystem = (char*)realloc(new_filesystem, strlen(new_filesystem) + strlen(line) + 2);
+                strcat(new_filesystem, "\n");
+                strcat(new_filesystem, line);
+            }
+        } else {
+            // Пропускаем содержимое удаляемого файла
+            while (line && line[0] != '/') {
+                line = strtok(NULL, "\n");
+            }
+        }
+        line = strtok(NULL, "\n");
+    }
+    fp = fopen("filesystem.txt", "w");
+    if (fp == NULL) {
+        perror("Ошибка открытия файла для записи");
+        free(filesystem_content);
+        free(new_filesystem);
+        return -1;
+    }
+    if (new_filesystem) {
+      fprintf(fp, "%s", new_filesystem);
+    }
+    free(filesystem_content);
+    free(new_filesystem);
+    fclose(fp);
+    return 0;
+}
+
+
+
