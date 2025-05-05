@@ -2,7 +2,7 @@
 группа 0907-34
 
 ## Практика 2
-File* open_file(const char * bsz.txt) - открывает либо создаёт и открывает новый файл (const char * bsz.txt). Тип данных  - файловый.
+File* open_file(const char * bsz.txt) - открывает либо создаёт и открывает новый файл bsz.txt. Тип данных  - файловый.
 char* view_file(const char* bsz.txt)- просмотр файла bsz.txt реализуется через данную функцию. Тип данных - текстовый. 
 int delete_file(const char* bsz.txt) - удаляет файл bsz.txt. Тип данных - числовой. 
 ## Практика 3
