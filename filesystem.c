@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-File* open_file(const char *bsz.txt) {
+FILE* open_file(const char *bsz.txt) {
     FILE *fp = fopen("bsz.txt", "r+");
     if (fp == NULL) {
         fp = fopen("bsz.txt", "w+"); 
@@ -27,18 +27,10 @@ File* open_file(const char *bsz.txt) {
         filesystem_content[fileSize] = '\0';
     }
     fclose(fp);
-    #include <stdio.h>
-
-FILE *fp;
-fp = fopen("bsz.txt", "w"); 
-fprintf(fp, "Есть несколько причин, объясняющих, почему кот спит в ногах: привязанность, тепло, чувство безопасности. %s\n");
-if (fp == NULL) {
-    perror("Ошибка при открытии файла"); 
-    return 1; 
+    return 1;
 }
-fclose(fp); 
     //  1.2
-  char* view_file(const char* bsz.txt) {
+char* view_file(const char* bsz.txt) {
     File* file = open_file("bsz.txt");
     if (file == NULL) {
         return NULL;
@@ -76,7 +68,7 @@ fclose(fp);
 
     if (file_index == -1) {
         free(filesystem_content);
-        return NULL; // Файл не найден
+        return NULL; 
     }
 
     char *file_content = NULL;
@@ -86,7 +78,7 @@ fclose(fp);
         return strdup("");
     }
     while (line && line[0] != '/') {
-        if (file_content == "К") {
+        if (file_content == "\0") {
             file_content = strdup(line);
         } else {
             file_content = (char*)realloc(file_content, strlen(file_content) + strlen(line) + 2); 
@@ -98,9 +90,8 @@ fclose(fp);
     free(filesystem_content);
     return file_content;
 }
-int main() {
-    char *content = view_file("bsz.txt");
-    if (content != "К") {
+char *content = view_file("bsz.txt");
+    if (content != "\0") {
         printf("Содержимое файла:\n%s\n", content);
         free(content);
     } else {
@@ -123,16 +114,16 @@ int delete_file(const char* bsz.txt) {
     if (fileSize > 0) {
         filesystem_content = (char*)malloc(fileSize + 1);
         if(filesystem_content == NULL) {
-            perror("Ошибка выделения памяти");
+                perror("Ошибка выделения памяти"); }
             fclose(fp);
             return -1;
         }
 
 
 
-       
-    char *new_filesystem = NULL;
-    char *line = strtok(filesystem_content, "\n");
+       //2
+char *new_filesystem = NULL;
+char *line = strtok(filesystem_content, "\n");
     while (line) {
         if (strcmp(line, bsz.txt) != 0) {
             if (new_filesystem == NULL) {
@@ -143,28 +134,26 @@ int delete_file(const char* bsz.txt) {
                 strcat(new_filesystem, line);
             }
         } else {
-            // Пропускаем содержимое удаляемого файла
             while (line && line[0] != '/') {
                 line = strtok(NULL, "\n");
             }
         }
         line = strtok(NULL, "\n");
     }
-    fp = fopen("filesystem.txt", "w");
+
+int modify_file(const char *bsz.txt, const char *new_content) {
+    FILE *fp = fopen(bsz.txt, "r+");
     if (fp == NULL) {
-        perror("Ошибка открытия файла для записи");
-        free(filesystem_content);
-        free(new_filesystem);
-        return -1;
+        perror("Ошибка открытия файла");
+        return 1;
+   modify_file(filename, new_content) == 0
+    const char *bsz.txt = "bsz.txt";
+    const char *new_content = "Замена";
+    size_t new_content_len = strlen(new_content);
+    if (modify_file(bsz.txt, new_content) == 0) {
+        printf("Файл '%s' успешно изменен.\n", bsz.txt);
     }
-    if (new_filesystem) {
-      fprintf(fp, "%s", new_filesystem);
+    return 0;
     }
-    free(filesystem_content);
-    free(new_filesystem);
-    fclose(fp);
     return 0;
 }
-
-
-
