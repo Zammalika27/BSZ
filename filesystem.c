@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "filesystem.h"
 
 FILE* open_file(const char *bsz.txt) {
     FILE *fp = fopen("bsz.txt", "r+");
