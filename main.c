@@ -40,7 +40,7 @@ fprintf(*bsz.txt, "%s.\n");
   }
 
 //15.05
-char a[256];
+char buffer[256];
 char create_file(const char *bsz.txt) {
     FILE *file = fopen("bsz.txt", "w");
     if (file) {
@@ -71,7 +71,6 @@ int modify_file(const char *bsz.txt, const char *content) {
 }
 
 char view_file(const char *bsz.txt) {
-    char buffer[256];
     FILE *file = fopen ("bsz.txt", "r");
     if (file) {
         printf("Содержимое файла '%s':\n", "bsz.txt");
@@ -83,11 +82,6 @@ char view_file(const char *bsz.txt) {
         perror("Ошибка просмотра файла");
     }
 }
-
-    char command[20]; // Увеличил размер для надежности
-    char filename[MAX_FILENAME_LENGTH];
-    int result;
-
     while (1) {
         printf("> "); // Приглашение командной строки
         result = scanf("%19s", command); // Считываем команду
@@ -96,29 +90,32 @@ char view_file(const char *bsz.txt) {
    break;
   }
 
-        if (strcmp(command, "создать") == 0) {
-            scanf("%255s", filename); // Считываем имя файла
-            create_file(filename);
-        } else if (strcmp(command, "удалить") == 0) {
-            scanf("%255s", filename); // Считываем имя файла
-            delete_file(filename);
-        } else if (strcmp(command, "изменить") == 0) {
-            scanf("%255s", filename); // Считываем имя файла
-            edit_file(filename);
-        } else if (strcmp(command, "посмотреть") == 0) {
-            scanf("%255s", filename); // Считываем имя файла
-            view_file(filename);
-        } else if (strcmp(command, "выход") == 0) {
+        if (strcmp(buffer, "создать") == 0) {
+            scanf("%255s", "bsz.txt"); 
+            create_file("bsz.txt");
+        } 
+        else if (strcmp(buffer, "удалить") == 0) {
+            scanf("%255s", "bsz.txt"); 
+            delete_file("bsz.txt");
+        } 
+        else if (strcmp(buffer, "изменить") == 0) {
+            scanf("%255s", "bsz.txt"); 
+            edit_file("bsz.txt");
+        } 
+        else if (strcmp(buffer, "посмотреть") == 0) {
+            scanf("%255s", "bsz.txt"); 
+            view_file("bsz.txt");
+        } 
+        else if (strcmp(buffer, "выход") == 0) {
             printf("Завершение работы...\n");
-            break; // Выход из цикла
-        } else {
-            printf("Неизвестная команда: %s\n", command);
-             while (getchar() != '\n'); // Очистка остатка строки в буфере ввода
+            break; 
+        } 
+        else {
+            printf("Неизвестная команда: %s\n", buffer);
+             while (getchar() != '\n');
         }
 
         while (getchar() != '\n');
-
-
     }
 
     return 0;
