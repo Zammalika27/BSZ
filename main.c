@@ -40,7 +40,8 @@ fprintf(*bsz.txt, "%s.\n");
   }
 
 //15.05
-    void createFile(const char *bsz.txt) {
+char a[256];
+char create_file(const char *bsz.txt) {
     FILE *file = fopen("bsz.txt", "w");
     if (file) {
         printf("Файл '%s' создан.\n", "bsz.txt");
@@ -50,7 +51,7 @@ fprintf(*bsz.txt, "%s.\n");
     }
 }
 
-void deleteFile(const char *bsz.txt) {
+int delete_file(const char *bsz.txt) {
     if (remove("bsz.txt") == 0) {
         printf("Файл '%s' удален.\n", "bsz.txt");
     } else {
@@ -58,7 +59,7 @@ void deleteFile(const char *bsz.txt) {
     }
 }
 
-void modifyFile(const char *bsz.txt, const char *content) {
+int modify_file(const char *bsz.txt, const char *content) {
     FILE *file = fopen("bsz.txt", "a");
     if (file) {
         fprintf(file, "%s\n", content);
@@ -69,7 +70,7 @@ void modifyFile(const char *bsz.txt, const char *content) {
     }
 }
 
-void viewFile(const char *bsz.txt) {
+char view_file(const char *bsz.txt) {
     char buffer[256];
     FILE *file = fopen ("bsz.txt", "r");
     if (file) {
@@ -83,28 +84,6 @@ void viewFile(const char *bsz.txt) {
     }
 }
 
-int main() {
-    char command[256];
-    while (1) {
-        printf("Введите команду: ");
-        fgets(command, sizeof(command), stdin);
-        
-        char *token = strtok(command, " \n");
-        if (token == NULL) continue;
-
-        if (strcmp(token, "создать") == 0) {
-            token = strtok(NULL, " \n");
-            if (token) createFile(token);
-        } else if (strcmp(token, "удалить") == 0) {
-            token = strtok(NULL, " \n");
-            if (token) deleteFile(token);
-        } else if (strcmp(token, "изменить") == 0) {
-            token = strtok(NULL, " \n");
-            char *content = strtok(NULL, "\n");
-            if (token &&
-
-
-#define MAX_FILENAME_LENGTH 256
     char command[20]; // Увеличил размер для надежности
     char filename[MAX_FILENAME_LENGTH];
     int result;
@@ -136,7 +115,7 @@ int main() {
             printf("Неизвестная команда: %s\n", command);
              while (getchar() != '\n'); // Очистка остатка строки в буфере ввода
         }
-  // Очистка буфера stdin от лишних символов
+
         while (getchar() != '\n');
 
 
