@@ -31,13 +31,6 @@ char *filesystem_content = NULL;
     fclose(fp);
     return 1;
 }
-fprintf(*bsz.txt, "%s.\n");
-  int readFileAndPrint(const char *bsz.txt) {
-  if (fp == NULL) {
-    perror("Ошибка при открытии файла для чтения");
-    return 1; }
-  fgetc ("bsz.txt"); 
-  }
 
 //15.05
 char buffer[256];
@@ -51,45 +44,86 @@ char create_file(const char *bsz.txt) {
     }
 }
 
-int delete_file(const char *bsz.txt) {
-    if (remove("bsz.txt") == 0) {
-        printf("Файл '%s' удален.\n", "bsz.txt");
-    } else {
-        perror("Ошибка удаления файла");
+int delete_file(const char* bsz.txt) {
+    FILE *fp = fopen("filesystem.txt", "r+");
+    if (fp == NULL) {
+        perror("Ошибка открытия файла");
+        return -1;
     }
-}
+    char *filesystem_content = NULL;
+    fseek(fp, 0, SEEK_END);
+    long fileSize = ftell(fp);
+    rewind(fp);
 
-int modify_file(const char *bsz.txt, const char *content) {
-    FILE *file = fopen("bsz.txt", "a");
-    if (file) {
-        fprintf(file, "%s\n", content);
-        printf("Файл '%s' изменен.\n", "bsz.txt");
-        fclose(file);
-    } else {
-        perror("Ошибка изменения файла");
-    }
-}
-
-char view_file(const char *bsz.txt) {
-    FILE *file = fopen ("bsz.txt", "r");
-    if (file) {
-        printf("Содержимое файла '%s':\n", "bsz.txt");
-        while (fgets(buffer, sizeof(buffer), file)) {
-            printf("%s", buffer);
+    if (fileSize > 0) {
+        filesystem_content = (char*)malloc(fileSize + 1);
+        if(filesystem_content == NULL) {
+                perror("Ошибка выделения памяти"); 
         }
-        fclose(file);
-    } else {
-        perror("Ошибка просмотра файла");
+            fclose(fp);
+            return -1;
     }
-}
-    while (1) {
-        printf("> "); // Приглашение командной строки
-        result = scanf("%19s", command); // Считываем команду
-  if (result == EOF){
-   printf("Конец ввода. Завершение.\n");
-   break;
-  }
 
+char *new_filesystem = NULL;
+char *line = strtok(filesystem_content, "\n");
+    while (line) {
+        if (strcmp(line, bsz.txt) != 0) {
+            if (new_filesystem == NULL) {
+                new_filesystem = strdup(line);
+            } else {
+                new_filesystem = (char*)realloc(new_filesystem, strlen(new_filesystem) + strlen(line) + 2);
+                strcat(new_filesystem, "\n");
+                strcat(new_filesystem, line);
+            }
+        } else {
+            while (line && line[0] != '/') {
+                line = strtok(NULL, "\n");
+            }
+        }
+        line = strtok(NULL, "\n");
+    }
+
+int modify_file(const char *bsz.txt, const char *new_content) {
+    FILE *fp = fopen(bsz.txt, "r+");
+    if (fp == NULL) {
+        perror("Ошибка открытия файла");
+        return 1;
+}
+    const char *bsz.txt = "bsz.txt";
+    const char *new_content = "Замена";
+    size_t new_content_len = strlen(new_content);
+    if (modify_file(bsz.txt, new_content) == 0) {
+        printf("Файл '%s' успешно изменен.\n", bsz.txt);
+        }
+    return 0;
+    }
+    return 0;
+}
+
+
+char* view_file(const char* bsz.txt) {
+    File* file = open_file("bsz.txt");
+    if (file == NULL) {
+        return NULL;
+    }
+    char *filesystem_content = NULL;
+    fseek(fp, 0, SEEK_END);
+    long fileSize = ftell(fp);
+    rewind(fp);
+
+    if (fileSize > 0) {
+        filesystem_content = (char*)malloc(fileSize + 1);
+        if (filesystem_content == NULL) {
+            perror("Ошибка выделения памяти");
+            fclose(fp);
+            return NULL;
+        }
+        fread(filesystem_content, 1, fileSize, fp);
+        filesystem_content[fileSize] = '\0';
+    } else {
+        fclose(fp);
+        return NULL; 
+    }
         if (strcmp(buffer, "создать") == 0) {
             scanf("%255s", "bsz.txt"); 
             create_file("bsz.txt");
