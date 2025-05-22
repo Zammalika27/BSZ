@@ -31,6 +31,7 @@ int main ()
     return 1;
         
     char buffer[256];
+
 char create_file(const char *bsz.txt) {
     FILE *file = fopen("bsz.txt", "w");
     if (file) {
@@ -71,7 +72,7 @@ char *filesystem_content = NULL;
 int delete_file(const char* bsz.txt) {
     FILE *fp = fopen("filesystem.txt", "r+");
     if (fp == NULL) {
-        perror("Ошибка открытия файла");
+        printf("Ошибка открытия файла");
         return -1;
     }
     char *filesystem_content = NULL;
@@ -106,7 +107,7 @@ int modify_file(const char *bsz.txt, const char *new_content) {
 }
 
 
-char* view_file(const char* bsz.txt) {
+char *view_file(const char* bsz.txt) {
     File* file = open_file("bsz.txt");
     if (file == NULL) {
         return NULL;
@@ -118,6 +119,7 @@ char* view_file(const char* bsz.txt) {
 
     if (fileSize > 0) {
         filesystem_content = (char*)malloc(fileSize + 1);
+        printf ("Файл просмотрен", bsz.txt);
         if (filesystem_content == NULL) {
             perror("Ошибка выделения памяти");
             fclose("bsz.txt");
